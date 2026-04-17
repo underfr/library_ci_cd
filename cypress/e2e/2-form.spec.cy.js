@@ -11,29 +11,20 @@ describe('Test des livres Fixtures', () => {
   
     beforeEach(() => {
       // La fixture est rechargée avant chaque test
-      cy.fixture('books').as('booksData')
+      cy.fixture('category').as('categoryData')
     })
   
-    it('doit enregistrer des livres', function () {
-      cy.visit('http://127.0.0.1:8080/book/add') // adapte l'URL si besoin
-      cy.wait(1000)
-  
-      this.booksData.forEach((item) => {
-        const book = item.book
-  
-        cy.get('#title').clear().type(book.title)
-        cy.get('#author').clear().type(book.author)
-        cy.get('#description').clear().type(book.description)
-  
-        // Sélection des catégories dans le select multiple
-        cy.get('#categories').select(book.categories)
-  
+    it('doit enregistrer des catégorie', function(){
+    cy.visit('http://127.0.0.1:8080/category/add')
+    cy.get('li').contains('Categories').click()
+    cy.wait(10000)
+    cy.get('p').contains('Ajouter une categorie').click()
+    cy.wait(1000)
+    this.categoryData.forEach((item)=>{
+        const category = item.category
+        cy.get('#name').clear().type(category.name)
         cy.get('button[type="submit"]').click()
-        cy.wait(500)
-  
-        // Retour sur la page d'ajout pour le livre suivant
-        cy.visit('http://127.0.0.1:8080/book/add')
-        cy.wait(500)
-      })
+        cy.wait(20)
     })
+})
   })
