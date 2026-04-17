@@ -21,7 +21,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: rootpw
-          MYSQL_DATABASE: taskdb
+          MYSQL_DATABASE: ci_cd
         ports:
           - 3306:3306
         options: >-
@@ -55,7 +55,10 @@ jobs:
       - name: créer le .env
         run: |
           cp .env.docker .env
-
+          echo 'DATABASE_PASSWORD=rootpw'>>.env
+      - name: créer la DB
+        run: |
+          mysql -u root -prootpw ci_cd < db.sql
 # compiler le code
 
 # job : test (environnement du projet)
