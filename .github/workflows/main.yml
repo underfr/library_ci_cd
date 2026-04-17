@@ -58,7 +58,7 @@ jobs:
           echo 'DATABASE_PASSWORD=rootpw'>>.env
       - name: créer la DB
         run: |
-          mysql -u root -prootpw ci_cd < db.sql
+          mysql -u root -prootpw -h 127.0.0.1 ci_cd < db.sql
 # compiler le code
 
 # job : test (environnement du projet)
