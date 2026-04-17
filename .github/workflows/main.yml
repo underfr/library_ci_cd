@@ -1,5 +1,6 @@
 # nom
 name: e2e tests cypress et PHP
+
 # declencheur
 on:
   push:
@@ -9,14 +10,15 @@ on:
     branches:
       - feature
       - main
+
 # environnement
 jobs:
   build:
-    # image unbuntu
+    # image ubuntu
     runs-on: ubuntu-latest
+
     # base de données
     services:
-      # Service MySQL
       mysql:
         image: mysql:8.0
         env:
@@ -28,42 +30,46 @@ jobs:
           --health-cmd="mysqladmin ping -h 127.0.0.1 -prootpw"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5      
-    # etape : checkout code
+          --health-retries=5
+
     steps:
+      # checkout code
       - name: checkout recuperation du code
-        uses: actions/checkout@v6
-      #install de php
+        uses: actions/checkout@v4
+
+      # install pnpm
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
+
+      # install PHP
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
           extensions: pdo_mysql, intl, mbstring, zip
           tools: composer
+
       - name: installer les dépendances
-        run: | 
-          composer install
+        run: composer install
+
+      # créer le .env
+      - name: créer le .env
+        run: |
+          cp .env.docker .env
+          echo 'DATABASE_PASSWORD=rootpw' >> .env
+
+      # créer la DB
+      - name: créer la DB
+        run: |
+          mysql -u root -prootpw -h 127.0.0.1 ci_cd < db.sql
+
+      # démarrer le serveur PHP
       - name: démarrer le serveur PHP
         run: |
           php -S 127.0.0.1:8080 -t public &
 
-# job : build (environnemt du projet)
-      - name: créer le .env
-        run: |
-          cp .env.docker .env
-          echo 'DATABASE_PASSWORD=rootpw'>>.env
-      - name: créer la DB
-        run: |
-          mysql -u root -prootpw -h 127.0.0.1 ci_cd < db.sql
-# compiler le code
-
-# job : test (environnement du projet)
-# installer cypress
+      # lancer les tests Cypress
       - name: Cypress run
         uses: cypress-io/github-action@v7
-# lancer les tests cypress
-
