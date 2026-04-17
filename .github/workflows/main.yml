@@ -34,6 +34,10 @@ jobs:
       - name: checkout recuperation du code
         uses: actions/checkout@v6
       #install de php
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
         with:
