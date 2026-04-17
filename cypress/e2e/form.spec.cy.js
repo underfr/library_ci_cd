@@ -2,7 +2,7 @@ describe('Test du site de librairie', () => {
 
     it('remplir le formulaire d\'inscription', function () {
             
-        cy.visit('https://library.mithridatem.fr/register');
+        cy.visit('http://127.0.0.1:8080/register');
 
         cy.get('#firstname').type('Antoine');
         cy.get('#lastname').type('Rousseau');

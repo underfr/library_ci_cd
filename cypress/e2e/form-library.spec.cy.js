@@ -1,7 +1,7 @@
 describe('Test ajout livres Pokémon', () => {
 
     before(() => {
-      cy.visit('http://localhost:8000/login')
+      cy.visit('http://localhost:8080/login')
       cy.get('#email').clear().type('antoine.rousseau1@test.fr')
       cy.get('#password').clear().type('Test1234!')
       cy.get('button[type="submit"]').click()
@@ -16,7 +16,7 @@ describe('Test ajout livres Pokémon', () => {
       this.booksData.forEach((item) => {
         const book = item.book
   
-        cy.visit('http://localhost:8000/book/add')
+        cy.visit('http://localhost:8080/book/add')
         cy.wait(500)
   
         cy.get('#title').clear().type(book.title)
