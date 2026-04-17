@@ -46,13 +46,24 @@ jobs:
       - name: démarrer le serveur PHP
         run: |
           php -S 127.0.0.1:8000 -t public &
-    
 
 # job : build (environnemt du projet)
+      - name: créer le .env
+        run: |
+          cp .env.docker .env
 
 # compiler le code
 
 # job : test (environnement du projet)
 # installer cypress
+  cypress-run:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      # Install dependencies with caching
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v7
 # lancer les tests cypress
 
