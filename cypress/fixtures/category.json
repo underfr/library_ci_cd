@@ -15,8 +15,5 @@
     { "category": { "name": "Sociologie" } },
     { "category": { "name": "Histoire" } },
     { "category": { "name": "Géographie" } },
-    { "category": { "name": "Sciences naturelles" } },
-    { "category": { "name": "Astronomie" } },
-    { "category": { "name": "Mathématiques" } },
-    { "category": { "name": "Informatique" } }
+    { "category": { "name": "Sciences naturelles" } }
   ]
